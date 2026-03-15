@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>Reflexionamos sobre nuestra actitud en clase</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f0f0f0;
+padding:20px;
+}
+
+h1{
+font-size:20px;
+margin-bottom:0;
+}
+
+.barra{
+display:flex;
+height:15px;
+margin-top:6px;
+margin-bottom:10px;
+}
+
+.barra div:nth-child(1){background:#d8e6a5;flex:2;}
+.barra div:nth-child(2){background:#f3b56c;flex:4;}
+.barra div:nth-child(3){background:#8ec5d6;flex:2;}
+
+table{
+border-collapse:collapse;
+width:100%;
+background:white;
+}
+
+th,td{
+border:1px solid #aaa;
+text-align:center;
+padding:6px;
+}
+
+th{
+background:#e6e6e6;
+font-size:12px;
+}
+
+.nombre{
+background:#e6e6e6;
+text-align:left;
+font-weight:bold;
+width:120px;
+}
+
+.icono{
+font-size:24px;
+display:block;
+margin-bottom:5px;
+}
+
+select{
+border:none;
+font-size:18px;
+background:transparent;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Reflexionamos sobre nuestra actitud en clase</h1>
+
+<div class="barra">
+<div></div>
+<div></div>
+<div></div>
+</div>
+
+<table>
+
+<tr>
+
+<th></th>
+
+<th>
+<span class="icono">📦</span>
+Cuidar mis<br>materiales
+</th>
+
+<th>
+<span class="icono">🤝</span>
+Cuidar mi cuerpo<br>y el de mis compañeros
+</th>
+
+<th>
+<span class="icono">📋</span>
+Respetar<br>las consignas
+</th>
+
+<th>
+<span class="icono">🔇</span>
+Trabajar<br>en silencio
+</th>
+
+<th>
+<span class="icono">👂</span>
+Escuchar<br>a la maestra
+</th>
+
+</tr>
+
+<tbody id="tabla"></tbody>
+
+</table>
+
+<script>
+
+const alumnos = [
+"Agustín","Facu","Felipe","Juanfra","Juanma",
+"Julia","Lara","Lola","Lua","Luca",
+"Lupe","Pili","Santi","Titi"
+]
+
+function selector(){
+return `
+<select>
+<option>•</option>
+<option>🙂</option>
+<option>😐</option>
+<option>🙁</option>
+</select>
+`
+}
+
+let html=""
+
+for(let alumno of alumnos){
+
+html+=`
+
+<tr>
+
+<td class="nombre">${alumno}</td>
+
+<td>${selector()}</td>
+<td>${selector()}</td>
+<td>${selector()}</td>
+<td>${selector()}</td>
+<td>${selector()}</td>
+
+</tr>
+
+`
+
+}
+
+document.getElementById("tabla").innerHTML = html
+
+</script>
+
+</body>
+</html>
