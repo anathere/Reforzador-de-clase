@@ -67,6 +67,26 @@ background:transparent;
 cursor:pointer;
 }
 
+.fila-color-1{background:#fff5e6;}
+.fila-color-2{background:#e6f5ff;}
+.fila-color-3{background:#f0ffe6;}
+.fila-color-4{background:#ffe6f5;}
+
+.boton-felices{
+margin-bottom:15px;
+padding:10px 20px;
+font-size:16px;
+background:#d8e6a5;
+border:2px solid #a5c373;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.boton-felices:hover{
+background:#c5d88a;
+}
+
 </style>
 
 </head>
@@ -80,6 +100,8 @@ cursor:pointer;
 <div></div>
 <div></div>
 </div>
+
+<button class="boton-felices" onclick="ponerTodosFelices()">😊 Poner a todos felices</button>
 
 <table>
 
@@ -123,8 +145,10 @@ Escuchar<br>a la maestra
 const alumnos = [
 "Agustín","Facu","Felipe","Juanfra","Juanma",
 "Julia","Lara","Lola","Lua","Luca",
-"Lupe","Pili","Santi","Titi"
+"Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"
 ]
+
+const colores = ["fila-color-1","fila-color-2","fila-color-3","fila-color-4"]
 
 function selector(){
 return `
@@ -139,11 +163,12 @@ return `
 
 let html=""
 
-for(let alumno of alumnos){
+for(let i = 0; i < alumnos.length; i++){
+let alumno = alumnos[i]
+let colorClase = colores[i % colores.length]
 
 html+=`
-
-<tr>
+<tr class="${colorClase}">
 
 <td class="nombre">${alumno}</td>
 
@@ -156,10 +181,16 @@ html+=`
 </tr>
 
 `
-
 }
 
 document.getElementById("tabla").innerHTML = html
+
+function ponerTodosFelices(){
+const selects = document.querySelectorAll("select")
+selects.forEach(select => {
+select.value = "🙂"
+})
+}
 
 </script>
 
