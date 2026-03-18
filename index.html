@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Reflexionamos sobre nuestra actitud en clase</title>
+
 <style>
 body{
 font-family: Arial, sans-serif;
@@ -105,12 +106,9 @@ border-radius:5px;
 cursor:pointer;
 font-weight:bold;
 }
-
-.boton-felices:hover{
-background:#c5d88a;
-}
 </style>
 </head>
+
 <body>
 
 <h1>Reflexionamos sobre nuestra actitud en clase</h1>
@@ -122,8 +120,8 @@ background:#c5d88a;
 </div>
 
 <div class="pestanas">
-<button class="pestana activa" onclick="cambiarClase('2B')">Clase 2B</button>
-<button class="pestana" onclick="cambiarClase('2A')">Clase 2A</button>
+<button class="pestana activa" onclick="cambiarClase('2B', this)">Clase 2B</button>
+<button class="pestana" onclick="cambiarClase('2A', this)">Clase 2A</button>
 </div>
 
 <div id="contenido-2B" class="contenido-clase activo">
@@ -131,11 +129,11 @@ background:#c5d88a;
 <table>
 <tr>
 <th></th>
-<th><span class="icono">📦</span>Cuidar mis<br>materiales</th>
-<th><span class="icono">🤝</span>Cuidar mi cuerpo<br>y el de mis compañeros</th>
-<th><span class="icono">📋</span>Respetar<br>las consignas</th>
-<th><span class="icono">🔇</span>Trabajar<br>en silencio</th>
-<th><span class="icono">👂</span>Escuchar<br>a la maestra</th>
+<th>📦<br>Cuidar materiales</th>
+<th>🤝<br>Cuidar cuerpos</th>
+<th>📋<br>Respetar consignas</th>
+<th>🔇<br>Trabajar en silencio</th>
+<th>👂<br>Escuchar</th>
 </tr>
 <tbody id="tabla-2B"></tbody>
 </table>
@@ -146,56 +144,98 @@ background:#c5d88a;
 <table>
 <tr>
 <th></th>
-<th><span class="icono">📦</span>Cuidar mis<br>materiales</th>
-<th><span class="icono">🤝</span>Cuidar mi cuerpo<br>y el de mis compañeros</th>
-<th><span class="icono">📋</span>Respetar<br>las consignas</th>
-<th><span class="icono">🔇</span>Trabajar<br>en silencio</th>
-<th><span class="icono">👂</span>Escuchar<br>a la maestra</th>
+<th>📦<br>Cuidar materiales</th>
+<th>🤝<br>Cuidar cuerpos</th>
+<th>📋<br>Respetar consignas</th>
+<th>🔇<br>Trabajar en silencio</th>
+<th>👂<br>Escuchar</th>
 </tr>
 <tbody id="tabla-2A"></tbody>
 </table>
 </div>
 
 <script>
-const alumnos2B = ["Agustín","Facu","Felipe","Juanfra","Juanma","Julia","Lara","Lola","Lua","Luca","Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"]
 
-const alumnos2A = ["Tomás","Timoteo","Alfo B","Paz","Alfo G","Juan","Mateo","Giuliana","Bruno","Franscisco","Alfonso","Franco","Guada","Vicente","Felipe","Isa","Lorenzo","Benjamín","Sofía"]
+const alumnos = {
+"2B": ["Agustín","Facu","Felipe","Juanfra","Juanma","Julia","Lara","Lola","Lua","Luca","Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"],
+"2A": ["Tomás","Timoteo","Alfo B","Paz","Alfo G","Juan","Mateo","Giuliana","Bruno","Francisco","Alfonso","Franco","Guada","Vicente","Felipe","Isa","Lorenzo","Benjamín","Sofía"]
+}
 
 const colores = ["fila-color-1","fila-color-2","fila-color-3","fila-color-4"]
 
-function selector(){
-return '<select><option>•</option><option>🙂</option><option>😐</option><option>🙁</option></select>'
+function selector(clase, i, j){
+return `<select onchange="guardar('${clase}',${i},${j},this.value)">
+<option>•</option>
+<option>🙂</option>
+<option>😐</option>
+<option>🙁</option>
+</select>`
 }
 
-function generarTabla(alumnos, idTabla){
+function generarTabla(clase){
 let html=""
-for(let i = 0; i < alumnos.length; i++){ 
-let alumno = alumnos[i]
-let colorClase = colores[i % colores.length]
-html+='<tr class="'+colorClase+'"><td class="nombre">'+alumno+'</td><td>'+selector()+'</td><td>'+selector()+'</td><td>'+selector()+'</td><td>'+selector()+'</td><td>'+selector()+'</td></tr>'
+alumnos[clase].forEach((nombre,i)=>{
+let color = colores[i % colores.length]
+html += `<tr class="${color}">
+<td class="nombre">${nombre}</td>
+<td>${selector(clase,i,0)}</td>
+<td>${selector(clase,i,1)}</td>
+<td>${selector(clase,i,2)}</td>
+<td>${selector(clase,i,3)}</td>
+<td>${selector(clase,i,4)}</td>
+</tr>`
+})
+document.getElementById("tabla-"+clase).innerHTML = html
+cargar(clase)
 }
-document.getElementById(idTabla).innerHTML = html
-}
 
-generarTabla(alumnos2B, "tabla-2B")
-generarTabla(alumnos2A, "tabla-2A")
+function cambiarClase(clase, boton){
+document.querySelectorAll(".contenido-clase").forEach(c=>c.classList.remove("activo"))
+document.getElementById("contenido-"+clase).classList.add("activo")
 
-function cambiarClase(clase){
-document.getElementById("contenido-2B").classList.remove("activo")
-document.getElementById("contenido-2A").classList.remove("activo")
-document.getElementById("contenido-" + clase).classList.add("activo")
-
-document.querySelectorAll(".pestana").forEach(p => p.classList.remove("activa"))
-event.target.classList.add("activa")
+document.querySelectorAll(".pestana").forEach(p=>p.classList.remove("activa"))
+boton.classList.add("activa")
 }
 
 function ponerTodosFelices(clase){
-const tabla = document.getElementById("tabla-" + clase)
-const selects = tabla.querySelectorAll("select")
-selects.forEach(select => {
-select.value = "🙂"
+document.querySelectorAll("#tabla-"+clase+" select").forEach(s=>{
+s.value="🙂"
+})
+guardarTodo(clase)
+}
+
+function guardar(clase,i,j,valor){
+let datos = JSON.parse(localStorage.getItem("datos")) || {}
+datos[clase] = datos[clase] || []
+datos[clase][i] = datos[clase][i] || []
+datos[clase][i][j] = valor
+localStorage.setItem("datos", JSON.stringify(datos))
+}
+
+function guardarTodo(clase){
+document.querySelectorAll("#tabla-"+clase+" tr").forEach((fila,i)=>{
+fila.querySelectorAll("select").forEach((s,j)=>{
+guardar(clase,i,j,s.value)
+})
 })
 }
+
+function cargar(clase){
+let datos = JSON.parse(localStorage.getItem("datos")) || {}
+if(!datos[clase]) return
+
+document.querySelectorAll("#tabla-"+clase+" tr").forEach((fila,i)=>{
+fila.querySelectorAll("select").forEach((s,j)=>{
+if(datos[clase][i] && datos[clase][i][j]){
+s.value = datos[clase][i][j]
+}
+})
+})
+}
+
+generarTabla("2B")
+generarTabla("2A")
+
 </script>
 
 </body>
