@@ -2,18 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Reflexionamos sobre nuestra actitud en clase</title>
+<title>Clases</title>
 
 <style>
 body{
-font-family: Arial, sans-serif;
+font-family: Arial;
 background:#f0f0f0;
 padding:20px;
-}
-
-h1{
-font-size:20px;
-margin-bottom:0;
 }
 
 .pestanas{
@@ -24,221 +19,145 @@ margin-bottom:15px;
 
 .pestana{
 padding:10px 20px;
-background:#e0e0e0;
+background:#ddd;
 border:2px solid #999;
-border-radius:5px 5px 0 0;
 cursor:pointer;
 font-weight:bold;
 }
 
 .pestana.activa{
-background:#ffffff;
+background:#fff;
 }
 
-.contenido-clase{
+.contenido{
 display:none;
 }
 
-.contenido-clase.activo{
+.contenido.activo{
 display:block;
 }
 
-.barra{
-display:flex;
-height:15px;
-margin-top:6px;
-margin-bottom:10px;
-}
-
-.barra div:nth-child(1){background:#d8e6a5;flex:2;}
-.barra div:nth-child(2){background:#f3b56c;flex:4;}
-.barra div:nth-child(3){background:#8ec5d6;flex:2;}
-
 table{
-border-collapse:collapse;
 width:100%;
+border-collapse:collapse;
 background:white;
 }
 
-th,td{
+td,th{
 border:1px solid #aaa;
+padding:5px;
 text-align:center;
-padding:6px;
-}
-
-th{
-background:#e6e6e6;
-font-size:12px;
 }
 
 .nombre{
-background:#e6e6e6;
 text-align:left;
 font-weight:bold;
-width:120px;
 }
 
-.icono{
-font-size:24px;
-display:block;
-margin-bottom:5px;
-}
-
-select{
-border:none;
-font-size:18px;
-background:transparent;
+button{
+margin-bottom:10px;
+padding:8px;
 cursor:pointer;
-}
-
-.fila-color-1{background:#fff5e6;}
-.fila-color-2{background:#e6f5ff;}
-.fila-color-3{background:#f0ffe6;}
-.fila-color-4{background:#ffe6f5;}
-
-.boton-felices{
-margin-bottom:15px;
-padding:10px 20px;
-font-size:16px;
-background:#d8e6a5;
-border:2px solid #a5c373;
-border-radius:5px;
-cursor:pointer;
-font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Reflexionamos sobre nuestra actitud en clase</h1>
-
-<div class="barra">
-<div></div>
-<div></div>
-<div></div>
-</div>
+<h2>Registro de clase</h2>
 
 <div class="pestanas">
-<button class="pestana activa" onclick="cambiarClase('2B', this)">Clase 2B</button>
-<button class="pestana" onclick="cambiarClase('2A', this)">Clase 2A</button>
+<button id="btn-2B" class="pestana activa">Clase 2B</button>
+<button id="btn-2A" class="pestana">Clase 2A</button>
 </div>
 
-<div id="contenido-2B" class="contenido-clase activo">
-<button class="boton-felices" onclick="ponerTodosFelices('2B')">😊 Poner a todos felices</button>
-<table>
-<tr>
-<th></th>
-<th>📦<br>Cuidar materiales</th>
-<th>🤝<br>Cuidar cuerpos</th>
-<th>📋<br>Respetar consignas</th>
-<th>🔇<br>Trabajar en silencio</th>
-<th>👂<br>Escuchar</th>
-</tr>
-<tbody id="tabla-2B"></tbody>
-</table>
-</div>
-
-<div id="contenido-2A" class="contenido-clase">
-<button class="boton-felices" onclick="ponerTodosFelices('2A')">😊 Poner a todos felices</button>
-<table>
-<tr>
-<th></th>
-<th>📦<br>Cuidar materiales</th>
-<th>🤝<br>Cuidar cuerpos</th>
-<th>📋<br>Respetar consignas</th>
-<th>🔇<br>Trabajar en silencio</th>
-<th>👂<br>Escuchar</th>
-</tr>
-<tbody id="tabla-2A"></tbody>
-</table>
-</div>
+<div id="2B" class="contenido activo"></div>
+<div id="2A" class="contenido"></div>
 
 <script>
 
-const alumnos = {
+const clases = {
 "2B": ["Agustín","Facu","Felipe","Juanfra","Juanma","Julia","Lara","Lola","Lua","Luca","Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"],
 "2A": ["Tomás","Timoteo","Alfo B","Paz","Alfo G","Juan","Mateo","Giuliana","Bruno","Francisco","Alfonso","Franco","Guada","Vicente","Felipe","Isa","Lorenzo","Benjamín","Sofía"]
 }
 
-const colores = ["fila-color-1","fila-color-2","fila-color-3","fila-color-4"]
+const criterios = ["Materiales","Cuerpo","Consignas","Silencio","Escucha"]
 
-function selector(clase, i, j){
-return `<select onchange="guardar('${clase}',${i},${j},this.value)">
-<option>•</option>
-<option>🙂</option>
-<option>😐</option>
-<option>🙁</option>
-</select>`
-}
+// CREAR TABLAS
+function crearTabla(clase){
+let html = `<button onclick="felices('${clase}')">😊 Todos felices</button>`
+html += "<table><tr><th></th>"
 
-function generarTabla(clase){
-let html=""
-alumnos[clase].forEach((nombre,i)=>{
-let color = colores[i % colores.length]
-html += `<tr class="${color}">
-<td class="nombre">${nombre}</td>
-<td>${selector(clase,i,0)}</td>
-<td>${selector(clase,i,1)}</td>
-<td>${selector(clase,i,2)}</td>
-<td>${selector(clase,i,3)}</td>
-<td>${selector(clase,i,4)}</td>
-</tr>`
+criterios.forEach(c => html += "<th>"+c+"</th>")
+html += "</tr>"
+
+clases[clase].forEach((alumno,i)=>{
+html += "<tr><td class='nombre'>"+alumno+"</td>"
+
+criterios.forEach((c,j)=>{
+let val = obtener(clase,i,j)
+html += `<td>
+<select onchange="guardar('${clase}',${i},${j},this.value)">
+<option ${val=="•"?"selected":""}>•</option>
+<option ${val=="🙂"?"selected":""}>🙂</option>
+<option ${val=="😐"?"selected":""}>😐</option>
+<option ${val=="🙁"?"selected":""}>🙁</option>
+</select>
+</td>`
 })
-document.getElementById("tabla-"+clase).innerHTML = html
-cargar(clase)
-}
 
-function cambiarClase(clase, boton){
-document.querySelectorAll(".contenido-clase").forEach(c=>c.classList.remove("activo"))
-document.getElementById("contenido-"+clase).classList.add("activo")
-
-document.querySelectorAll(".pestana").forEach(p=>p.classList.remove("activa"))
-boton.classList.add("activa")
-}
-
-function ponerTodosFelices(clase){
-document.querySelectorAll("#tabla-"+clase+" select").forEach(s=>{
-s.value="🙂"
+html += "</tr>"
 })
-guardarTodo(clase)
+
+html += "</table>"
+
+document.getElementById(clase).innerHTML = html
 }
 
-function guardar(clase,i,j,valor){
+// GUARDAR
+function guardar(clase,i,j,val){
 let datos = JSON.parse(localStorage.getItem("datos")) || {}
 datos[clase] = datos[clase] || []
 datos[clase][i] = datos[clase][i] || []
-datos[clase][i][j] = valor
+datos[clase][i][j] = val
 localStorage.setItem("datos", JSON.stringify(datos))
 }
 
-function guardarTodo(clase){
-document.querySelectorAll("#tabla-"+clase+" tr").forEach((fila,i)=>{
-fila.querySelectorAll("select").forEach((s,j)=>{
-guardar(clase,i,j,s.value)
-})
-})
-}
-
-function cargar(clase){
+// OBTENER
+function obtener(clase,i,j){
 let datos = JSON.parse(localStorage.getItem("datos")) || {}
-if(!datos[clase]) return
-
-document.querySelectorAll("#tabla-"+clase+" tr").forEach((fila,i)=>{
-fila.querySelectorAll("select").forEach((s,j)=>{
-if(datos[clase][i] && datos[clase][i][j]){
-s.value = datos[clase][i][j]
-}
-})
-})
+return datos[clase]?.[i]?.[j] || "•"
 }
 
-generarTabla("2B")
-generarTabla("2A")
-  <div class="pestanas">
-<button id="btn-2B" class="pestana activa">Clase 2B</button>
-<button id="btn-2A" class="pestana">Clase 2A</button>
-</div>
+// TODOS FELICES
+function felices(clase){
+document.querySelectorAll("#"+clase+" select").forEach((s,i)=>{
+s.value="🙂"
+})
+
+document.querySelectorAll("#"+clase+" select").forEach((s,i)=>{
+let fila = Math.floor(i/5)
+let col = i%5
+guardar(clase,fila,col,"🙂")
+})
+}
+
+// CAMBIAR PESTAÑA
+function activar(clase){
+document.querySelectorAll(".contenido").forEach(c=>c.classList.remove("activo"))
+document.getElementById(clase).classList.add("activo")
+
+document.querySelectorAll(".pestana").forEach(p=>p.classList.remove("activa"))
+document.getElementById("btn-"+clase).classList.add("activa")
+}
+
+// EVENTOS
+document.getElementById("btn-2B").onclick = () => activar("2B")
+document.getElementById("btn-2A").onclick = () => activar("2A")
+
+// INICIAR
+crearTabla("2B")
+crearTabla("2A")
 
 </script>
 
