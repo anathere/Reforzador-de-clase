@@ -9,14 +9,47 @@
 <style>
 
 body{
-font-family: Arial, sans-serif;
-background:#f0f0f0;
+font-family: Arial, sans-serif;ackground:#f0f0f0;
 padding:20px;
 }
 
 h1{
 font-size:20px;
 margin-bottom:0;
+}
+
+.pestanas{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.pestana{
+padding:10px 20px;ackground:#e0e0e0;
+border:2px solid #999;
+border-radius:5px 5px 0 0;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+.pestana:hover{
+background:#d0d0d0;
+}
+
+.pestana.activa{
+background:#ffffff;
+border-bottom:2px solid #ffffff;
+position:relative;
+z-index:2;
+}
+
+.contenido-clase{
+display:none;
+}
+
+.contenido-clase.activo{
+display:block;
 }
 
 .barra{
@@ -32,13 +65,11 @@ margin-bottom:10px;
 
 table{
 border-collapse:collapse;
-width:100%;
-background:white;
+width:100%;ackground:white;
 }
 
 th,td{
-border:1px solid #aaa;
-text-align:center;
+border:1px solid #aaa;	ext-align:center;
 padding:6px;
 }
 
@@ -62,8 +93,7 @@ margin-bottom:5px;
 
 select{
 border:none;
-font-size:18px;
-background:transparent;
+font-size:18px;ackground:transparent;
 cursor:pointer;
 }
 
@@ -75,8 +105,7 @@ cursor:pointer;
 .boton-felices{
 margin-bottom:15px;
 padding:10px 20px;
-font-size:16px;
-background:#d8e6a5;
+font-size:16px;ackground:#d8e6a5;
 border:2px solid #a5c373;
 border-radius:5px;
 cursor:pointer;
@@ -101,7 +130,14 @@ background:#c5d88a;
 <div></div>
 </div>
 
-<button class="boton-felices" onclick="ponerTodosFelices()">😊 Poner a todos felices</button>
+<div class="pestanas">
+<button class="pestana activa" onclick="cambiarClase('2B')">Clase 2B</button>
+<button class="pestana" onclick="cambiarClase('2A')">Clase 2A</button>
+</div>
+
+<!-- Contenido Clase 2B -->
+<div id="contenido-2B" class="contenido-clase activo">
+<button class="boton-felices" onclick="ponerTodosFelices('2B')">😊 Poner a todos felices</button>
 
 <table>
 
@@ -136,16 +172,66 @@ Escuchar<br>a la maestra
 
 </tr>
 
-<tbody id="tabla"></tbody>
+<tbody id="tabla-2B"></tbody>
 
 </table>
+</div>
+
+<!-- Contenido Clase 2A -->
+<div id="contenido-2A" class="contenido-clase">
+<button class="boton-felices" onclick="ponerTodosFelices('2A')">😊 Poner a todos felices</button>
+
+<table>
+
+<tr>
+
+<th></th>
+
+<th>
+<span class="icono">📦</span>
+Cuidar mis<br>materiales
+</th>
+
+<th>
+<span class="icono">🤝</span>
+Cuidar mi cuerpo<br>y el de mis compañeros
+</th>
+
+<th>
+<span class="icono">📋</span>
+Respetar<br>las consignas
+</th>
+
+<th>
+<span class="icono">🔇</span>
+Trabajar<br>en silencio
+</th>
+
+<th>
+<span class="icono">👂</span>
+Escuchar<br>a la maestra
+</th>
+
+</tr>
+
+<tbody id="tabla-2A"></tbody>
+
+</table>
+</div>
 
 <script>
 
-const alumnos = [
+const alumnos2B = [
 "Agustín","Facu","Felipe","Juanfra","Juanma",
 "Julia","Lara","Lola","Lua","Luca",
 "Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"
+]
+
+const alumnos2A = [
+"Tomás","Timoteo","Alfo B","Paz","Alfo G",
+"Juan","Mateo","Giuliana","Bruno","Franscisco",
+"Alfonso","Franco","Guada","Vicente","Felipe",
+"Isa","Lorenzo","Benjamín","Sofía"
 ]
 
 const colores = ["fila-color-1","fila-color-2","fila-color-3","fila-color-4"]
@@ -161,9 +247,10 @@ return `
 `
 }
 
+function generarTabla(alumnos, idTabla){
 let html=""
 
-for(let i = 0; i < alumnos.length; i++){
+for(let i = 0; i < alumnos.length; i++){ 
 let alumno = alumnos[i]
 let colorClase = colores[i % colores.length]
 
@@ -183,10 +270,24 @@ html+=`
 `
 }
 
-document.getElementById("tabla").innerHTML = html
+document.getElementById(idTabla).innerHTML = html
+}
 
-function ponerTodosFelices(){
-const selects = document.querySelectorAll("select")
+generarTabla(alumnos2B, "tabla-2B")
+generarTabla(alumnos2A, "tabla-2A")
+
+function cambiarClase(clase){
+document.getElementById("contenido-2B").classList.remove("activo")
+document.getElementById("contenido-2A").classList.remove("activo")
+document.getElementById("contenido-" + clase).classList.add("activo")
+
+document.querySelectorAll(".pestana").forEach(p => p.classList.remove("activa"))
+event.target.classList.add("activa")
+}
+
+function ponerTodosFelices(clase){
+const tabla = document.getElementById("tabla-" + clase)
+const selects = tabla.querySelectorAll("select")
 selects.forEach(select => {
 select.value = "🙂"
 })
