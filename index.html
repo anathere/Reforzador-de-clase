@@ -2,69 +2,133 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Clases</title>
+<title>Reflexionamos sobre nuestra actitud en clase</title>
 
 <style>
 body{
 font-family: Arial;
-background:#f0f0f0;
+background:#f2f4f8;
 padding:20px;
 }
 
+h1{
+font-size:22px;
+margin-bottom:5px;
+}
+
+.barra{
+display:flex;
+height:15px;
+margin-bottom:15px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.barra div:nth-child(1){background:#d8e6a5;flex:2;}
+.barra div:nth-child(2){background:#f3b56c;flex:4;}
+.barra div:nth-child(3){background:#8ec5d6;flex:2;}
+
 .pestanas{
 display:flex;
-gap:10px;
+gap:8px;
 margin-bottom:15px;
 }
 
 .pestana{
-padding:10px 20px;
-background:#ddd;
-border:2px solid #999;
+padding:10px 18px;
+background:#e0e0e0;
+border:none;
+border-radius:10px 10px 0 0;
 cursor:pointer;
 font-weight:bold;
+transition:0.2s;
 }
 
 .pestana.activa{
-background:#fff;
+background:#ffffff;
+box-shadow:0 -2px 6px rgba(0,0,0,0.08);
 }
 
 .contenido{
 display:none;
+background:white;
+padding:15px;
+border-radius:0 10px 10px 10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
 }
 
 .contenido.activo{
 display:block;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
+.boton-felices{
+margin-bottom:12px;
+padding:8px 16px;
+font-size:15px;
+background:#d8e6a5;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
 }
 
-td,th{
-border:1px solid #aaa;
+.boton-felices:hover{
+background:#c7da8f;
+}
+
+table{
+border-collapse:collapse;
+width:100%;
+}
+
+th{
+background:#f0f0f0;
+font-size:12px;
+padding:6px;
+}
+
+td{
+border:1px solid #ddd;
 padding:5px;
 text-align:center;
 }
 
 .nombre{
+background:#f0f0f0;
 text-align:left;
 font-weight:bold;
+width:130px;
 }
 
-button{
-margin-bottom:10px;
-padding:8px;
+.icono{
+font-size:20px;
+display:block;
+margin-bottom:3px;
+}
+
+select{
+border:none;
+font-size:18px;
+background:transparent;
 cursor:pointer;
 }
+
+.fila1{background:#fff7e8;}
+.fila2{background:#eaf6ff;}
+.fila3{background:#f0ffe8;}
+.fila4{background:#fff0f6;}
 </style>
 </head>
 
 <body>
 
-<h2>Registro de clase</h2>
+<h1>Reflexionamos sobre nuestra actitud en clase</h1>
+
+<div class="barra">
+<div></div>
+<div></div>
+<div></div>
+</div>
 
 <div class="pestanas">
 <button id="btn-2B" class="pestana activa">Clase 2B</button>
@@ -81,21 +145,34 @@ const clases = {
 "2A": ["Tomás","Timoteo","Alfo B","Paz","Alfo G","Juan","Mateo","Giuliana","Bruno","Francisco","Alfonso","Franco","Guada","Vicente","Felipe","Isa","Lorenzo","Benjamín","Sofía"]
 }
 
-const criterios = ["Materiales","Cuerpo","Consignas","Silencio","Escucha"]
+const criterios = [
+{icono:"📦", texto:"Cuidar materiales"},
+{icono:"🤝", texto:"Cuidar cuerpos"},
+{icono:"📋", texto:"Respetar consignas"},
+{icono:"🔇", texto:"Trabajar en silencio"},
+{icono:"👂", texto:"Escuchar"}
+]
 
-// CREAR TABLAS
+const colores = ["fila1","fila2","fila3","fila4"]
+
 function crearTabla(clase){
-let html = `<button onclick="felices('${clase}')">😊 Todos felices</button>`
+let html = `<button class="boton-felices" onclick="felices('${clase}')">😊 Poner a todos felices</button>`
 html += "<table><tr><th></th>"
 
-criterios.forEach(c => html += "<th>"+c+"</th>")
+criterios.forEach(c=>{
+html += `<th><span class="icono">${c.icono}</span>${c.texto}</th>`
+})
+
 html += "</tr>"
 
 clases[clase].forEach((alumno,i)=>{
-html += "<tr><td class='nombre'>"+alumno+"</td>"
+let color = colores[i % colores.length]
+
+html += `<tr class="${color}"><td class="nombre">${alumno}</td>`
 
 criterios.forEach((c,j)=>{
 let val = obtener(clase,i,j)
+
 html += `<td>
 <select onchange="guardar('${clase}',${i},${j},this.value)">
 <option ${val=="•"?"selected":""}>•</option>
@@ -114,7 +191,6 @@ html += "</table>"
 document.getElementById(clase).innerHTML = html
 }
 
-// GUARDAR
 function guardar(clase,i,j,val){
 let datos = JSON.parse(localStorage.getItem("datos")) || {}
 datos[clase] = datos[clase] || []
@@ -123,13 +199,11 @@ datos[clase][i][j] = val
 localStorage.setItem("datos", JSON.stringify(datos))
 }
 
-// OBTENER
 function obtener(clase,i,j){
 let datos = JSON.parse(localStorage.getItem("datos")) || {}
 return datos[clase]?.[i]?.[j] || "•"
 }
 
-// TODOS FELICES
 function felices(clase){
 document.querySelectorAll("#"+clase+" select").forEach((s,i)=>{
 s.value="🙂"
@@ -142,7 +216,6 @@ guardar(clase,fila,col,"🙂")
 })
 }
 
-// CAMBIAR PESTAÑA
 function activar(clase){
 document.querySelectorAll(".contenido").forEach(c=>c.classList.remove("activo"))
 document.getElementById(clase).classList.add("activo")
@@ -151,11 +224,9 @@ document.querySelectorAll(".pestana").forEach(p=>p.classList.remove("activa"))
 document.getElementById("btn-"+clase).classList.add("activa")
 }
 
-// EVENTOS
 document.getElementById("btn-2B").onclick = () => activar("2B")
 document.getElementById("btn-2A").onclick = () => activar("2A")
 
-// INICIAR
 crearTabla("2B")
 crearTabla("2A")
 
@@ -163,3 +234,4 @@ crearTabla("2A")
 
 </body>
 </html>
+
