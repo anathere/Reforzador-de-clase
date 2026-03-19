@@ -109,8 +109,26 @@ margin-bottom:3px;
 select{
 border:none;
 font-size:18px;
-background:transparent;
 cursor:pointer;
+padding:4px;
+border-radius:6px;
+}
+
+/* COLORES SEGÚN ESTADO */
+.verde{
+background:#d4edda;
+}
+
+.amarillo{
+background:#fff3cd;
+}
+
+.rojo{
+background:#f8d7da;
+}
+
+.gris{
+background:#eeeeee;
 }
 
 .fila1{background:#fff7e8;}
@@ -155,6 +173,13 @@ const criterios = [
 
 const colores = ["fila1","fila2","fila3","fila4"]
 
+function colorClase(valor){
+if(valor=="🙂") return "verde"
+if(valor=="😐") return "amarillo"
+if(valor=="🙁") return "rojo"
+return "gris"
+}
+
 function crearTabla(clase){
 let html = `<button class="boton-felices" onclick="felices('${clase}')">😊 Poner a todos felices</button>`
 html += "<table><tr><th></th>"
@@ -174,7 +199,7 @@ criterios.forEach((c,j)=>{
 let val = obtener(clase,i,j)
 
 html += `<td>
-<select onchange="guardar('${clase}',${i},${j},this.value)">
+<select class="${colorClase(val)}" onchange="cambiarColor(this); guardar('${clase}',${i},${j},this.value)">
 <option ${val=="•"?"selected":""}>•</option>
 <option ${val=="🙂"?"selected":""}>🙂</option>
 <option ${val=="😐"?"selected":""}>😐</option>
@@ -189,6 +214,11 @@ html += "</tr>"
 html += "</table>"
 
 document.getElementById(clase).innerHTML = html
+}
+
+function cambiarColor(select){
+select.classList.remove("verde","amarillo","rojo","gris")
+select.classList.add(colorClase(select.value))
 }
 
 function guardar(clase,i,j,val){
@@ -207,6 +237,7 @@ return datos[clase]?.[i]?.[j] || "•"
 function felices(clase){
 document.querySelectorAll("#"+clase+" select").forEach((s,i)=>{
 s.value="🙂"
+cambiarColor(s)
 })
 
 document.querySelectorAll("#"+clase+" select").forEach((s,i)=>{
@@ -234,4 +265,3 @@ crearTabla("2A")
 
 </body>
 </html>
-
