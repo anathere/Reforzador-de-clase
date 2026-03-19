@@ -41,7 +41,6 @@ border:none;
 border-radius:10px 10px 0 0;
 cursor:pointer;
 font-weight:bold;
-transition:0.2s;
 }
 
 .pestana.activa{
@@ -72,10 +71,6 @@ cursor:pointer;
 font-weight:bold;
 }
 
-.boton-felices:hover{
-background:#c7da8f;
-}
-
 table{
 border-collapse:collapse;
 width:100%;
@@ -91,6 +86,8 @@ td{
 border:1px solid #ddd;
 padding:5px;
 text-align:center;
+background:white;
+transition:0.2s;
 }
 
 .nombre{
@@ -108,33 +105,28 @@ margin-bottom:3px;
 
 select{
 border:none;
-font-size:18px;
+font-size:20px;
+background:transparent;
 cursor:pointer;
-padding:4px;
-border-radius:6px;
 }
 
-/* COLORES SEGÚN ESTADO */
+/* COLORES DE CELDA */
 .verde{
-background:#d4edda;
+background:#d4edda !important;
 }
 
 .amarillo{
-background:#fff3cd;
+background:#fff3cd !important;
 }
 
 .rojo{
-background:#f8d7da;
+background:#f8d7da !important;
 }
 
 .gris{
-background:#eeeeee;
+background:white;
 }
 
-.fila1{background:#fff7e8;}
-.fila2{background:#eaf6ff;}
-.fila3{background:#f0ffe8;}
-.fila4{background:#fff0f6;}
 </style>
 </head>
 
@@ -171,8 +163,6 @@ const criterios = [
 {icono:"👂", texto:"Escuchar"}
 ]
 
-const colores = ["fila1","fila2","fila3","fila4"]
-
 function colorClase(valor){
 if(valor=="🙂") return "verde"
 if(valor=="😐") return "amarillo"
@@ -191,15 +181,14 @@ html += `<th><span class="icono">${c.icono}</span>${c.texto}</th>`
 html += "</tr>"
 
 clases[clase].forEach((alumno,i)=>{
-let color = colores[i % colores.length]
 
-html += `<tr class="${color}"><td class="nombre">${alumno}</td>`
+html += `<tr><td class="nombre">${alumno}</td>`
 
 criterios.forEach((c,j)=>{
 let val = obtener(clase,i,j)
 
-html += `<td>
-<select class="${colorClase(val)}" onchange="cambiarColor(this); guardar('${clase}',${i},${j},this.value)">
+html += `<td class="${colorClase(val)}">
+<select onchange="cambiarColor(this); guardar('${clase}',${i},${j},this.value)">
 <option ${val=="•"?"selected":""}>•</option>
 <option ${val=="🙂"?"selected":""}>🙂</option>
 <option ${val=="😐"?"selected":""}>😐</option>
@@ -217,8 +206,9 @@ document.getElementById(clase).innerHTML = html
 }
 
 function cambiarColor(select){
-select.classList.remove("verde","amarillo","rojo","gris")
-select.classList.add(colorClase(select.value))
+let td = select.parentElement
+td.classList.remove("verde","amarillo","rojo","gris")
+td.classList.add(colorClase(select.value))
 }
 
 function guardar(clase,i,j,val){
