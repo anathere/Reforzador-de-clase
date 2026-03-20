@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,29 +8,29 @@
 
 <style>
 *{
-box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 body{
-font-family:Arial, sans-serif;
-background:#f2f4f8;
-padding:20px;
-margin:0;
+  font-family:Arial, sans-serif;
+  background:#f2f4f8;
+  padding:20px;
+  margin:0;
 }
 
 h1{
-font-size:22px;
-margin-bottom:5px;
-line-height:1.3;
+  font-size:22px;
+  margin-bottom:5px;
+  line-height:1.3;
 }
 
 .barra{
-display:flex;
-height:15px;
-margin-bottom:15px;
-border-radius:10px;
-overflow:hidden;
-max-width:100%;
+  display:flex;
+  height:15px;
+  margin-bottom:15px;
+  border-radius:10px;
+  overflow:hidden;
+  max-width:100%;
 }
 
 .barra div:nth-child(1){background:#d8e6a5;flex:2;}
@@ -37,326 +38,303 @@ max-width:100%;
 .barra div:nth-child(3){background:#8ec5d6;flex:2;}
 
 .pestanas{
-display:flex;
-gap:8px;
-margin-bottom:15px;
-flex-wrap:wrap;
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+  flex-wrap:wrap;
 }
 
 .pestana{
-padding:10px 18px;
-background:#e0e0e0;
-border:none;
-border-radius:10px 10px 0 0;
-cursor:pointer;
-font-weight:bold;
-font-size:15px;
+  padding:10px 18px;
+  background:#e0e0e0;
+  border:none;
+  border-radius:10px 10px 0 0;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:15px;
 }
 
 .pestana.activa{
-background:#ffffff;
-box-shadow:0 -2px 6px rgba(0,0,0,0.08);
+  background:#ffffff;
+  box-shadow:0 -2px 6px rgba(0,0,0,0.08);
 }
 
 .contenido{
-display:none;
-background:white;
-padding:15px;
-border-radius:0 10px 10px 10px;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
-overflow-x:auto;
+  display:none;
+  background:white;
+  padding:15px;
+  border-radius:0 10px 10px 10px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.08);
+  overflow-x:auto;
 }
 
 .contenido.activo{
-display:block;
+  display:block;
 }
 
 .boton-felices{
-margin-bottom:12px;
-padding:10px 16px;
-font-size:15px;
-background:#d8e6a5;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
+  margin-bottom:12px;
+  padding:10px 16px;
+  font-size:15px;
+  background:#d8e6a5;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .tabla-contenedor{
-width:100%;
-overflow-x:auto;
--webkit-overflow-scrolling:touch;
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 table{
-border-collapse:collapse;
-width:100%;
-min-width:700px;
+  border-collapse:collapse;
+  width:100%;
+  min-width:700px;
 }
 
 th{
-background:#f0f0f0;
-font-size:12px;
-padding:6px;
+  background:#f0f0f0;
+  font-size:12px;
+  padding:6px;
 }
 
 td{
-border:1px solid #ddd;
-padding:5px;
-text-align:center;
-background:white;
-transition:0.2s;
-min-width:85px;
+  border:1px solid #ddd;
+  padding:5px;
+  text-align:center;
+  background:white;
+  transition:0.2s;
+  min-width:85px;
 }
 
 .nombre{
-background:#f0f0f0;
-text-align:left;
-font-weight:bold;
-width:130px;
-min-width:130px;
-position:sticky;
-left:0;
-z-index:1;
+  background:#f0f0f0;
+  text-align:left;
+  font-weight:bold;
+  width:140px;
+  min-width:140px;
 }
 
 .icono{
-font-size:20px;
-display:block;
-margin-bottom:3px;
+  font-size:20px;
+  display:block;
+  margin-bottom:3px;
 }
 
 select{
-border:none;
-font-size:20px;
-background:transparent;
-cursor:pointer;
-width:100%;
-text-align:center;
-min-height:40px;
+  border:none;
+  font-size:20px;
+  background:transparent;
+  cursor:pointer;
+  width:100%;
+  text-align:center;
+  min-height:40px;
 }
 
 /* COLORES DE CELDA */
-.verde{
-background:#d4edda !important;
-}
+.verde{ background:#d4edda !important; }
+.amarillo{ background:#fff3cd !important; }
+.rojo{ background:#f8d7da !important; }
+.gris{ background:white; }
 
-.amarillo{
-background:#fff3cd !important;
-}
-
-.rojo{
-background:#f8d7da !important;
-}
-
-.gris{
-background:white;
-}
-
-/* TABLET */
 @media (max-width: 900px){
-body{
-padding:14px;
+  body{ padding:14px; }
+  h1{ font-size:20px; }
+  .contenido{ padding:12px; }
+  .pestana{
+    font-size:14px;
+    padding:10px 14px;
+  }
 }
 
-h1{
-font-size:20px;
-}
-
-.contenido{
-padding:12px;
-}
-
-.pestana{
-font-size:14px;
-padding:10px 14px;
-}
-}
-
-/* CELULAR */
 @media (max-width: 600px){
-body{
-padding:10px;
-}
+  body{ padding:10px; }
 
-h1{
-font-size:18px;
-}
+  h1{ font-size:18px; }
 
-.barra{
-height:12px;
-margin-bottom:12px;
-}
+  .barra{
+    height:12px;
+    margin-bottom:12px;
+  }
 
-.pestanas{
-gap:6px;
-}
+  .pestanas{ gap:6px; }
 
-.pestana{
-flex:1 1 auto;
-font-size:14px;
-padding:10px 12px;
-text-align:center;
-}
+  .pestana{
+    flex:1 1 auto;
+    font-size:14px;
+    padding:10px 12px;
+    text-align:center;
+  }
 
-.contenido{
-padding:10px;
-border-radius:10px;
-}
+  .contenido{
+    padding:10px;
+    border-radius:10px;
+  }
 
-.boton-felices{
-width:100%;
-font-size:14px;
-padding:12px;
-}
+  .boton-felices{
+    width:100%;
+    font-size:14px;
+    padding:12px;
+  }
 
-th{
-font-size:11px;
-padding:5px;
-}
+  th{
+    font-size:11px;
+    padding:5px;
+  }
 
-td{
-padding:4px;
-min-width:72px;
-}
+  td{
+    padding:4px;
+    min-width:72px;
+  }
 
-.nombre{
-font-size:13px;
-min-width:110px;
-width:110px;
-}
+  .nombre{
+    font-size:13px;
+    min-width:110px;
+    width:110px;
+  }
 
-.icono{
-font-size:18px;
-}
+  .icono{
+    font-size:18px;
+  }
 
-select{
-font-size:18px;
-min-height:38px;
-}
+  select{
+    font-size:18px;
+    min-height:38px;
+  }
 }
 </style>
 </head>
-
 <body>
 
 <h1>Reflexionamos sobre nuestra actitud en clase</h1>
 
 <div class="barra">
-<div></div>
-<div></div>
-<div></div>
+  <div></div>
+  <div></div>
+  <div></div>
 </div>
 
 <div class="pestanas">
-<button id="btn-2B" class="pestana activa">Clase 2B</button>
-<button id="btn-2A" class="pestana">Clase 2A</button>
+  <button id="btn-clase2B" class="pestana activa">Clase 2B</button>
+  <button id="btn-clase2A" class="pestana">Clase 2A</button>
 </div>
 
-<div id="2B" class="contenido activo"></div>
-<div id="2A" class="contenido"></div>
+<div id="clase2B" class="contenido activo"></div>
+<div id="clase2A" class="contenido"></div>
 
 <script>
 const clases = {
-"2B": ["Agustín","Facu","Felipe","Juanfra","Juanma","Julia","Lara","Lola","Lua","Luca","Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"],
-"2A": ["Tomás","Timoteo","Alfo B","Paz","Alfo G","Juan","Mateo","Giuliana","Bruno","Francisco","Alfonso","Franco","Guada","Vicente","Felipe","Isa","Lorenzo","Benjamín","Sofía"]
-}
+  "clase2B": ["Agustín","Facu","Felipe","Juanfra","Juanma","Julia","Lara","Lola","Lua","Luca","Lupe","Pili","Santi","Titi","Lolo","Guille","Toto"],
+  "clase2A": ["Tomás","Timoteo","Alfo B","Paz","Alfo G","Juan","Mateo","Giuliana","Bruno","Francisco","Alfonso","Franco","Guada","Vicente","Felipe","Isa","Lorenzo","Benjamín","Sofía"]
+};
+
+const nombresClases = {
+  "clase2B": "Clase 2B",
+  "clase2A": "Clase 2A"
+};
 
 const criterios = [
-{icono:"📦", texto:"Cuidar materiales"},
-{icono:"🤝", texto:"Cuidar cuerpos"},
-{icono:"📋", texto:"Respetar consignas"},
-{icono:"🔇", texto:"Trabajar en silencio"},
-{icono:"👂", texto:"Escuchar"}
-]
+  {icono:"📦", texto:"Cuidar materiales"},
+  {icono:"🤝", texto:"Cuidar cuerpos"},
+  {icono:"📋", texto:"Respetar consignas"},
+  {icono:"🔇", texto:"Trabajar en silencio"},
+  {icono:"👂", texto:"Escuchar"}
+];
 
 function colorClase(valor){
-if(valor=="🙂") return "verde"
-if(valor=="😐") return "amarillo"
-if(valor=="🙁") return "rojo"
-return "gris"
+  if(valor==="🙂") return "verde";
+  if(valor==="😐") return "amarillo";
+  if(valor==="🙁") return "rojo";
+  return "gris";
 }
 
 function crearTabla(clase){
-let html = `<button class="boton-felices" onclick="felices('${clase}')">😊 Poner a todos felices</button>`
-html += `<div class="tabla-contenedor">`
-html += "<table><tr><th></th>"
+  let html = `<button class="boton-felices" onclick="felices('${clase}')">😊 Poner a todos felices</button>`;
+  html += `<div class="tabla-contenedor">`;
+  html += `<table>`;
+  html += `<tr><th></th>`;
 
-criterios.forEach(c=>{
-html += `<th><span class="icono">${c.icono}</span>${c.texto}</th>`
-})
+  criterios.forEach(c=>{
+    html += `<th><span class="icono">${c.icono}</span>${c.texto}</th>`;
+  });
 
-html += "</tr>"
+  html += `</tr>`;
 
-clases[clase].forEach((alumno,i)=>{
-html += `<tr><td class="nombre">${alumno}</td>`
+  clases[clase].forEach((alumno,i)=>{
+    html += `<tr>`;
+    html += `<td class="nombre">${alumno}</td>`;
 
-criterios.forEach((c,j)=>{
-let val = obtener(clase,i,j)
+    criterios.forEach((c,j)=>{
+      let val = obtener(clase,i,j);
 
-html += `<td class="${colorClase(val)}">
-<select onchange="cambiarColor(this); guardar('${clase}',${i},${j},this.value)">
-<option ${val=="•"?"selected":""}>•</option>
-<option ${val=="🙂"?"selected":""}>🙂</option>
-<option ${val=="😐"?"selected":""}>😐</option>
-<option ${val=="🙁"?"selected":""}>🙁</option>
-</select>
-</td>`
-})
+      html += `<td class="${colorClase(val)}">
+        <select onchange="cambiarColor(this); guardar('${clase}',${i},${j},this.value)">
+          <option ${val==="•"?"selected":""}>•</option>
+          <option ${val==="🙂"?"selected":""}>🙂</option>
+          <option ${val==="😐"?"selected":""}>😐</option>
+          <option ${val==="🙁"?"selected":""}>🙁</option>
+        </select>
+      </td>`;
+    });
 
-html += "</tr>"
-})
+    html += `</tr>`;
+  });
 
-html += "</table></div>"
+  html += `</table></div>`;
 
-document.getElementById(clase).innerHTML = html
+  document.getElementById(clase).innerHTML = html;
 }
 
 function cambiarColor(select){
-let td = select.parentElement
-td.classList.remove("verde","amarillo","rojo","gris")
-td.classList.add(colorClase(select.value))
+  let td = select.parentElement;
+  td.classList.remove("verde","amarillo","rojo","gris");
+  td.classList.add(colorClase(select.value));
 }
 
 function guardar(clase,i,j,val){
-let datos = JSON.parse(localStorage.getItem("datos")) || {}
-datos[clase] = datos[clase] || []
-datos[clase][i] = datos[clase][i] || []
-datos[clase][i][j] = val
-localStorage.setItem("datos", JSON.stringify(datos))
+  let datos = JSON.parse(localStorage.getItem("datos")) || {};
+  datos[clase] = datos[clase] || [];
+  datos[clase][i] = datos[clase][i] || [];
+  datos[clase][i][j] = val;
+  localStorage.setItem("datos", JSON.stringify(datos));
 }
 
 function obtener(clase,i,j){
-let datos = JSON.parse(localStorage.getItem("datos")) || {}
-return datos[clase]?.[i]?.[j] || "•"
+  let datos = JSON.parse(localStorage.getItem("datos")) || {};
+  return datos[clase]?.[i]?.[j] || "•";
 }
 
 function felices(clase){
-document.querySelectorAll("#"+clase+" select").forEach((s)=>{
-s.value="🙂"
-cambiarColor(s)
-})
+  const selects = document.querySelectorAll("#" + clase + " select");
 
-document.querySelectorAll("#"+clase+" select").forEach((s,i)=>{
-let fila = Math.floor(i/5)
-let col = i%5
-guardar(clase,fila,col,"🙂")
-})
+  selects.forEach((s)=>{
+    s.value = "🙂";
+    cambiarColor(s);
+  });
+
+  selects.forEach((s,i)=>{
+    let fila = Math.floor(i / criterios.length);
+    let col = i % criterios.length;
+    guardar(clase, fila, col, "🙂");
+  });
 }
 
 function activar(clase){
-document.querySelectorAll(".contenido").forEach(c=>c.classList.remove("activo"))
-document.getElementById(clase).classList.add("activo")
+  document.querySelectorAll(".contenido").forEach(c=>c.classList.remove("activo"));
+  document.getElementById(clase).classList.add("activo");
 
-document.querySelectorAll(".pestana").forEach(p=>p.classList.remove("activa"))
-document.getElementById("btn-"+clase).classList.add("activa")
+  document.querySelectorAll(".pestana").forEach(p=>p.classList.remove("activa"));
+  document.getElementById("btn-" + clase).classList.add("activa");
 }
 
-document.getElementById("btn-2B").onclick = () => activar("2B")
-document.getElementById("btn-2A").onclick = () => activar("2A")
+document.getElementById("btn-clase2B").onclick = () => activar("clase2B");
+document.getElementById("btn-clase2A").onclick = () => activar("clase2A");
 
-crearTabla("2B")
-crearTabla("2A")
+crearTabla("clase2B");
+crearTabla("clase2A");
 </script>
 
 </body>
